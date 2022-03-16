@@ -62,10 +62,10 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+       
     </repositories>
-
 	<dependencies>
-		<!-- 표준프레임워크 실행환경 -->
+		<!-- 표준프레임워크 실행환경 --> 
         <dependency>
 		    <groupId>egovframework.rte</groupId>
 		    <artifactId>egovframework.rte.ptl.mvc</artifactId>
@@ -74,7 +74,7 @@
 		    	<exclusion>
 		    		<artifactId>commons-logging</artifactId>
 		    		<groupId>commons-logging</groupId>
-		    	</exclusion>
+		    	</exclusion> 
 		    </exclusions>
         </dependency>
         <dependency>
@@ -123,7 +123,20 @@
 			<artifactId>hsqldb</artifactId>
 			<version>2.5.0</version>
 		</dependency>
-
+		       <!--  오라클 설정 S -->
+		<dependency>
+			<groupId>ojdbc</groupId>
+				<artifactId>ojdbc</artifactId>
+				<version>6-11</version>
+				<scope>system</scope>
+				<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6-11.2.0.3.jar</systemPath>
+		</dependency>		
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		       <!--  오라클 설정 E -->
         <!-- mysql이나 oracle DB 사용시 아래 설정 추가
         <dependency>
             <groupId>com.googlecode.log4jdbc</groupId>

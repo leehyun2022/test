@@ -70,7 +70,7 @@ public class EgovSampleController {
 	protected DefaultBeanValidator beanValidator;
 
 	/**
-	 * 글 목록을 조회한다. (pageing)
+	 * 글 목록을 조회한다. (pageing)sdsdsdsdsdsd
 	 * @param searchVO - 조회할 정보가 담긴 SampleDefaultVO
 	 * @param model
 	 * @return "egovSampleList"
@@ -78,7 +78,7 @@ public class EgovSampleController {
 	 */
 	@RequestMapping(value = "/egovSampleList.do")
 	public String selectSampleList(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
-
+		System.out.println("글 목로 조회 S");
 		/** EgovPropertyService.sample */
 		searchVO.setPageUnit(propertiesService.getInt("pageUnit"));
 		searchVO.setPageSize(propertiesService.getInt("pageSize"));
@@ -99,8 +99,8 @@ public class EgovSampleController {
 		int totCnt = sampleService.selectSampleListTotCnt(searchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-
-		return "sample/egovSampleList";
+		System.out.println("글 목로 조회 E");
+		return "egovframework/example/sample/egovSampleList";
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class EgovSampleController {
 	 * @param sampleVO - 수정할 정보가 담긴 VO
 	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
 	 * @param status
-	 * @return "forward:/egovSampleList.do"
+	 * @return "forward:/egovSampleList.do" 
 	 * @exception Exception
 	 */
 	@RequestMapping("/updateSample.do")
