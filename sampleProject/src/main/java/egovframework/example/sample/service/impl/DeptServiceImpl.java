@@ -17,6 +17,7 @@ package egovframework.example.sample.service.impl;
 
 import java.util.List;
 
+import egovframework.example.sample.service.CodeVO;
 import egovframework.example.sample.service.DeptService;
 import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.DeptVO;
@@ -71,6 +72,23 @@ public class DeptServiceImpl extends EgovAbstractServiceImpl implements DeptServ
 	 * @exception Exception
 	 */
 	@Override
+	public String insertCode(CodeVO vo) throws Exception {
+		LOGGER.debug(vo.toString());
+		
+		/** ID Generation Service */
+		//String id = egovIdGnrService.getNextStringId();
+		//vo.setId(id);
+		LOGGER.debug(vo.toString());
+		
+		return deptDAO.insertCode(vo);
+	}
+	/**
+	 * 글을 등록한다.
+	 * @param vo - 등록할 정보가 담긴 SampleVO
+	 * @return 등록 결과
+	 * @exception Exception
+	 */
+	@Override
 	public String insertDeptSample(DeptVO vo) throws Exception {
 		LOGGER.debug(vo.toString());
 
@@ -97,6 +115,12 @@ public class DeptServiceImpl extends EgovAbstractServiceImpl implements DeptServ
 	public int deleteDept(String deptNo) throws Exception {
 		// TODO Auto-generated method stub
 		return  deptDAO.deleteDept(deptNo);
+	}
+
+	@Override
+	public int updateDept(DeptVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return deptDAO.updateDept(vo);
 	}
 
 }

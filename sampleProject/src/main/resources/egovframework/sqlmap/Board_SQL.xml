@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BoardSpace">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="boardVO" type="main/service/BoardVO"/>
+
+
+	<insert id="boardDAO.inserNBoard">
+		<![CDATA[
+			INSERT INTO NBOARD 
+				(UNQ
+				  , TITLE
+				  , PASS
+				  , NAME
+				  , CONTENT
+				  , HITS
+				  , RDATE
+				  )
+			VALUES ( nboard_seq.NEXTVAL
+				  , #title#
+				  , #pass#
+				  , #name#
+				  , #content#
+				  , 0
+				  , sysdate
+				  )
+		]]>
+	</insert>
+	
+	<select id="boardDAO.selectNBoardList" resultClass="egovMap">
+		SELECT 
+		 	UNQ
+		 	, TITLE
+		 	, NAME
+			, HITS
+			, to_char(RDATE,'YYYY-MM-DD') AS RDATE		 	
+		fROM 
+			NBOARD
+		ORDER BY UNQ DESC
+	</select>
+
+</sqlMap>

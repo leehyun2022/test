@@ -5,8 +5,22 @@
 
 	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
 	<typeAlias  alias="deptVO" type="egovframework/example/sample/service/DeptVO"/>
+	<typeAlias  alias="codeVO" type="egovframework/example/sample/service/CodeVO"/>
 
 
+	<insert id="deptDAO.insertCode">
+		<![CDATA[
+			INSERT INTO codes 
+				(CODE
+				  , GID
+				  , NAME
+				  )
+			VALUES ( codes_seq.NEXTVAL
+				  , #gid#
+				  , #name#
+				  )
+		]]>
+	</insert>
 	<insert id="deptDAO.insertDeptSample">
 		<![CDATA[
 			INSERT INTO TEST.DEPT 
@@ -41,7 +55,10 @@
 		delete from dept where DEPT_NO = #deptNo#
 	</delete>
 	
-	
+	<update id="deptDAO.updateDept">
+		update dept set DEPT_NAME=#deptName# , LOC=#loc#
+		where DEPT_NO=#deptNo#
+	</update>
 	
 
 </sqlMap>

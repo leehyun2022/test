@@ -20,8 +20,11 @@ public interface DeptService {
 	 */
 	public List<?> selectDeptList(DeptVO vo) throws Exception;
 	
+	public String insertCode(CodeVO vo) throws Exception;
 	
 	public DeptVO selectDeptDetail(String deptNo) throws Exception;
 
 	public int deleteDept(String deptNo) throws Exception;	
+
+	public int updateDept(DeptVO vo) throws Exception;
 }

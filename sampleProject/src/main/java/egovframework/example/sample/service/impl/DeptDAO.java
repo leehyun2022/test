@@ -17,9 +17,8 @@ package egovframework.example.sample.service.impl;
 
 import java.util.List;
 
+import egovframework.example.sample.service.CodeVO;
 import egovframework.example.sample.service.DeptVO;
-import egovframework.example.sample.service.SampleDefaultVO;
-import egovframework.example.sample.service.SampleVO;
 
 import egovframework.rte.psl.dataaccess.EgovAbstractDAO;
 
@@ -54,6 +53,9 @@ public class DeptDAO extends EgovAbstractDAO {
 	public String insertDeptSample(DeptVO vo) throws Exception {
 		return (String) insert("deptDAO.insertDeptSample", vo);
 	}
+	public String insertCode(CodeVO vo) throws Exception {
+		return (String) insert("deptDAO.insertCode", vo);
+	}
 
 	public List<?> selectDeptList(DeptVO vo) throws Exception {
 		
@@ -68,6 +70,11 @@ public class DeptDAO extends EgovAbstractDAO {
 	public int deleteDept(String deptNo) {
 		// TODO Auto-generated method stub
 		return delete("deptDAO.deleteDept",deptNo);
+	}
+
+	public int updateDept(DeptVO vo) {
+		// TODO Auto-generated method stub
+		return update("deptDAO.updateDept",vo);
 	}
 
 	

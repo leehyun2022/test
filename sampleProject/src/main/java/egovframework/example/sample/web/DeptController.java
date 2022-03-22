@@ -23,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import egovframework.example.sample.service.CodeVO;
 import egovframework.example.sample.service.DeptService;
 import egovframework.example.sample.service.DeptVO;
 
@@ -88,6 +89,32 @@ public class DeptController {
 		return "redirect:/deptList.do";
 	}
 	
+	@RequestMapping(value ="/deptModifyWrite.do")
+	public String selectDeptModify(String deptNo, ModelMap model)throws Exception{
+		DeptVO vo = deptService.selectDeptDetail(deptNo);
+		
+		model.addAttribute("deptVO",vo);
+		
+		return "dept/deptModifyWrite";
+	}
 	
-
+	@RequestMapping(value ="/deptModifySave.do")
+	public String updateDept(DeptVO vo) throws Exception{
+		deptService.updateDept(vo);
+		return "redirect:/deptList.do"; 
+	}
+	
+	/*
+	 * @RequestMapping(value="/codeWrite.do") public String codeWrite() throws
+	 * Exception{
+	 * 
+	 * return "code/codeWrite"; }
+	 * 
+	 * @RequestMapping(value ="/codeWriteSave.do") public String insertCode(CodeVO
+	 * vo) throws Exception{
+	 * 
+	 * String result = deptService.insertCode(vo); return "redirect:/codeList.do"; }
+	 */
+	
+	
 }
