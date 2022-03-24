@@ -19,4 +19,13 @@ public interface BoardService {
 		 * @throws Exception
 		 */
 		public List<?> selectNBoardList(BoardVO vo)throws Exception;
+		
+		
+		public int selectNBoardTotal(BoardVO vo) throws Exception;
+
+		public BoardVO selectNBoardDetail(int unq)throws Exception;
+		
+		public int updateBoard(BoardVO vo)throws Exception;
+		
+		public int deleteBoard(BoardVO vo)throws Exception;
 }

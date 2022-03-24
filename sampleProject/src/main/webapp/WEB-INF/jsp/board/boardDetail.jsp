@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+ 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일반게시판 등록</title>
+<title>일반게시판 상세 화면</title>
 </head>
 <link href="/js/jquery-ui-1.13.1/jquery-ui.css" rel="stylesheet">
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -91,27 +96,27 @@ $(function(){
 
 <form name="frm" id="frm" method="post" action="boardWriteSave.do">
 <table>
-	<caption></caption>
+	<caption>게시판 상세</caption>
 	<tr>
-		<th width="20%"><label for="title">제목</label></th>
-		<td width="80%"><input type="text" name="title" id="title" class="input1"></td>
+		<th width="20%">제목</th>
+		<td width="80%">${boardVO.title}</td>
 	</tr>
 	<tr>
-		<th><label for="pass">암호</label></th>
-		<td><input type="password" name="pass" id="pass"></td>
+		<th>글쓴이</th>
+		<td>${boardVO.name}</td>
 	</tr>
 	<tr>
-		<th><label for="name">작성자</label></th>
-		<td><input type="text" name="name" id="name"></td>
-	</tr>
+		<th>내용</th>
+		<td>${boardVO.content}</td>
 	<tr>
-		<th><label for="content">내용</label></th>
-		<td><textarea name="content" id ="content" class="textarea"></textarea></td>
-	</tr>
+	<tr>
+		<th>등록일</th>
+		<td>${boardVO.rdate}</td>	
 	<tr>
 		<th colspan="2">
-		<button type="submit" class="button" onclick="fn_submit(); return false;">저장</button>
-		<button type="button" class="button">취소</button>
+				<button type="button" onclick="location='boardList.do'">목록</button>
+				<button type="button" onclick="location='boardModifyWrite.do?unq=${boardVO.unq}'">수정</button>
+				<button type="button" onclick="location='boardDelete.do?unq=${boardVO.unq}'">삭제</button>
 		</th>
 		
 	</tr>

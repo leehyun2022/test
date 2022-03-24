@@ -9,6 +9,48 @@ public class BoardVO {
 		public String content;
 		public int hits;
 		public String rdate;
+		private int viewPage = 1;
+		private int startIndex =1;
+		private int endIndex = 10;
+		private int unit = 10;
+		private String searchGubun;
+		private String searchText;
+		public String getSearchGubun() {
+			return searchGubun;
+		}
+		public void setSearchGubun(String searchGubun) {
+			this.searchGubun = searchGubun;
+		}
+		public String getSearchText() {
+			return searchText;
+		}
+		public void setSearchText(String searchText) {
+			this.searchText = searchText;
+		}
+		public int getUnit() {
+			return unit;
+		}
+		public void setUnit(int unit) {
+			this.unit = unit;
+		}
+		public int getStartIndex() {
+			return startIndex;
+		}
+		public void setStartIndex(int startIndex) {
+			this.startIndex = startIndex;
+		}
+		public int getEndIndex() {
+			return endIndex;
+		}
+		public void setEndIndex(int endIndex) {
+			this.endIndex = endIndex;
+		}
+		public int getViewPage() {
+			return viewPage;
+		}
+		public void setViewPage(int viewPage) {
+			this.viewPage = viewPage;
+		}
 		public int getUnq() {
 			return unq;
 		}
