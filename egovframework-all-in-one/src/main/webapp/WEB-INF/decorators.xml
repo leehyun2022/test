@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE decorators>
+
+<decorators defaultdir="/WEB-INF/jsp/egovframework/com/cmm">
+
+	<!-- Any urls that are excluded will never be decorated by Sitemesh -->
+	<excludes>
+		<pattern>/admin/login.do</pattern>
+		<pattern>/admin/*Include.do</pattern>
+		<pattern>/uat/uia/egovLoginUsr.do</pattern>
+	</excludes>
+
+	<!-- admin -->
+	<decorator name="admin_top" page="EgovUnitTop.jsp.jsp" />
+	<decorator name="admin_sidebar" page="EgovUnitLeft.jsp" />
+	<decorator name="admin_default" page="EgovUnitBottom.jsp">
+		<pattern>/admin/*.do</pattern>
+	</decorator>
+
+	<!-- front -->
+	<decorator name="top" page="EgovUnitTop.jsp" />
+	<decorator name="sidebar" page="EgovUnitLeft.jsp" />
+	<decorator name="default" page="EgovUnitLeft.jsp">
+		<pattern>/*.do</pattern>
+	</decorator>
+
+	<!-- preview -->
+	<decorator name="preview_default" page="EgovUnitBottom.jsp">
+		<pattern>/preview/*.do</pattern>
+	</decorator>
+
+</decorators>

@@ -57,7 +57,7 @@
         ) A
         )B
         <![CDATA[
-        WHERE RN >= #startIndex# AND  RN <= #endIndex#
+        WHERE RN > #startIndex# AND  RN <= #endIndex#
         ]]>
 	</select>
 	
@@ -100,5 +100,17 @@
 	<delete id="boardDAO.deleteBoard">
 		delete nboard where unq = #unq#
 	</delete>
+	
+	<update id="boardDAO.updateBoardHits">
+		update nboard set hits=hits+1
+		where unq = #unq#
+	</update>
+	
+	<select id="boardDAO.selectNBoardPass" resultClass="java.lang.Integer">
+		select count(*)
+		from nboard
+		where unq = #unq# 
+		and pass=#pass#
+	</select>
 
 </sqlMap>

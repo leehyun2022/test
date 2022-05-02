@@ -4,6 +4,7 @@
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
       
     
     
@@ -51,15 +52,22 @@ function fn_page(num){
 	location = "boardList.do?viewPage="+num+"&unit="+unit;
 	
 }
+function linkPage(pageNo){
+	var unit=$("#unit").val();
+	location.href = "/boardList.do?viewPage="+pageNo+"&unit="+unit;
+}	
 
 </script>
 <body>
+<%@ include file="../include/topmenu.jsp"  %>
+
+<br>
 <form:form commandName="boardVO" id="searchForm" name="searchForm" method="post" action="boardList.do">
 <table>
 	<caption>일반게시판 목록</caption>
 	<div>Total : ${total}</div>
 	<div style="width:600px; text-align:right;">
-			<form:select path="unit" id="unit">
+			<form:select path="unit" id="unit" onchange="fn_search(1);">
 				<form:option value="5">5개씩 보기</form:option>
 				<form:option value="10">10개씩 보기</form:option>
 				<form:option value="20">20개씩 보기</form:option>
@@ -82,25 +90,26 @@ function fn_page(num){
 		<th width="15%">조회수</th>
 	</tr>
 	
-	<c:set var="cnt" value="${startRowNo}"/>
-	<c:forEach var="result" items="${resultList}">
+	<c:forEach var="result" items="${resultList}" varStatus="status">
 	<tr align="center">
-		<td><c:out value="${cnt}"></c:out></td>
+		<td>${paginationInfo.totalRecordCount - ((boardVO.viewPage-1) * paginationInfo.recordCountPerPage + status.count)+1}</td>
 		<td align="left">
-		<a href="boardDetail.do?unq=${result.unq}"><c:out value="${result.title}"></c:out></a></td>
+		<a href="boardDetail.do?unq=${result.unq}&unit=${boardVO.unit}"><c:out value="${result.title}"></c:out></a></td>
 		<td><c:out value="${result.name}"></c:out></td>
 		<td><c:out value="${result.rdate}"></c:out></td>
 		<td><c:out value="${result.hits}"></c:out></td>
 	</tr>
 	
-	<c:set var="cnt" value="${cnt-1 }"/>
 	</c:forEach>
 	
 </table>
 <div style="width:600px; margin-top:5px; text-align:center;">	
-<c:forEach var="i" begin="1" end="${totalPage}">
+<ui:pagination paginationInfo = "${paginationInfo}"
+			type="image"
+			jsFunction="linkPage"/>
+<%-- <c:forEach var="i" begin="1" end="${totalPage}">
 	<a href="#" onclick="fn_page(${i })">${i }</a>
-</c:forEach>
+</c:forEach> --%>
 </div>
 <div style="width:600px; margin-top:50px; text-align:right;">	
 	<button type="button" onclick="fn_search()">목록</button>

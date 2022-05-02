@@ -4,7 +4,7 @@
 <sqlMap namespace="BoardSpace">
 
 	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
-	<typeAlias  alias="boardVO" type="main/service/BoardVO"/>
+	<typeAlias  alias="boardVO" type="main.service.BoardVO"/>
 
 
 	<insert id="boardDAO.inserNBoard">
@@ -30,15 +30,87 @@
 	</insert>
 	
 	<select id="boardDAO.selectNBoardList" resultClass="egovMap">
-		SELECT 
-		 	UNQ
-		 	, TITLE
-		 	, NAME
-			, HITS
-			, to_char(RDATE,'YYYY-MM-DD') AS RDATE		 	
-		fROM 
-			NBOARD
-		ORDER BY UNQ DESC
+        
+        SELECT B.* FROM (
+        SELECT ROWNUM RN, A.* FROM(
+        SELECT               
+             UNQ
+             , TITLE
+             , NAME
+            , HITS
+            , TO_CHAR(RDATE,'YYYY-MM-DD') AS RDATE             
+        FROM 
+            NBOARD
+            WHERE 1=1
+		<isNotNull property="searchText">
+			<isEqual property="searchGubun" compareValue="title">
+            AND TITLE LIKE '%'||#searchText#||'%' 
+			</isEqual>
+			<isEqual property="searchGubun" compareValue="name">
+            AND NAME LIKE '%'||#searchText#||'%' 
+			</isEqual>
+			<isEqual property="searchGubun" compareValue="content">
+            AND CONTENT LIKE '%'||#searchText#||'%' 
+			</isEqual>
+        </isNotNull>  
+        ORDER BY UNQ DESC
+        ) A
+        )B
+        <![CDATA[
+        WHERE RN > #startIndex# AND  RN <= #endIndex#
+        ]]>
+	</select>
+	
+	<select id="boardDAO.selectNBoardToal" resultClass="java.lang.Integer">
+		select count(*) total from NBoard
+		WHERE 1=1
+		<isNotNull property="searchText">
+			<isEqual property="searchGubun" compareValue="title">
+            AND TITLE LIKE '%'||#searchText#||'%' 
+			</isEqual>
+			<isEqual property="searchGubun" compareValue="name">
+            AND NAME LIKE '%'||#searchText#||'%' 
+			</isEqual>
+			<isEqual property="searchGubun" compareValue="content">
+            AND CONTENT LIKE '%'||#searchText#||'%' 
+			</isEqual>
+        </isNotNull> 		
+		
+	</select>
+	
+	<select id="boardDAO.selectNBoardDetail" resultClass="boardVO" >
+		select 
+		unq
+				  , title
+				  , pass
+				  , name
+				  , content
+				  , hits
+				  , rdate
+		from nboard
+		where unq = #unq#
+	
+	</select>
+	
+	<update id="boardDAO.updateBoard">
+			update nboard set title=#title#,content=#content#
+			where unq = #unq#
+	</update>
+	
+	<delete id="boardDAO.deleteBoard">
+		delete nboard where unq = #unq#
+	</delete>
+	
+	<update id="boardDAO.updateBoardHits">
+		update nboard set hits=hits+1
+		where unq = #unq#
+	</update>
+	
+	<select id="boardDAO.selectNBoardPass" resultClass="java.lang.Integer">
+		select count(*)
+		from nboard
+		where unq = #unq# 
+		and pass=#pass#
 	</select>
 
 </sqlMap>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>일반게시판 등록</title>
 </head>
 <link href="/js/jquery-ui-1.13.1/jquery-ui.css" rel="stylesheet">
 <script src="/js/jquery-3.6.0.min.js"></script>
@@ -41,10 +41,10 @@ th,td {
 			$("#title").val("");
 			return false;
 		}
-		alert("전::"+$("#title").val());
+		//alert("전::"+$("#title").val());
 		$("#title").val($.trim($("#title").val()))
 		
-		alert("후::"+$("#title").val());
+		//alert("후::"+$("#title").val());
 		if($.trim($("#pass").val()) == ""){
 			alert("암호입력 jquery");
 			$("#pass").focus();
@@ -68,7 +68,7 @@ th,td {
 		success:function(data){
 			if(data="ok"){
 				alert("저장");
-				//location="boardList.do";
+				location="boardList.do";
 			}else{
 				alert("실패");
 			}

@@ -28,4 +28,8 @@ public interface BoardService {
 		public int updateBoard(BoardVO vo)throws Exception;
 		
 		public int deleteBoard(BoardVO vo)throws Exception;
+		
+		public int updateNBoardHits(int unq)throws Exception;
+		
+		public int selectNBoardPass(BoardVO vo)throws Exception;
 }
