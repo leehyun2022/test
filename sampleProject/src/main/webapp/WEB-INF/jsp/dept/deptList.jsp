@@ -12,6 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <title>부서목록</title>
+<script src="https://unpkg.com/vue@2.3.3"></script>
 </head>
 <style>
 	table {
@@ -23,7 +24,18 @@ th,td{
 	padding:5px;
 	}
 </style>
+<script> 
+var model = { 
+		message : "Hello Vue.js~" 
+		} 
+var _app = new Vue({
+	el : "#app", 
+	data : model 
+	}) 
+</script>
 <body>
+<div id="app"> <h2>{{message}}</h2> </div>
+
 	<table>
 		<caption>부서목록</caption>
 		<tr>
