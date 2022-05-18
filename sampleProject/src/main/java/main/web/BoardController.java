@@ -39,6 +39,57 @@ public class BoardController {
 		return msg;
 	}
 
+	@RequestMapping(value = "/boardListVue.do")
+	public String selectNBoardListVue(BoardVO vo, ModelMap model) throws Exception {
+		
+		if (vo.getUnit() == 0) {
+			vo.setUnit(5);
+		}
+		int total = boardService.selectNBoardTotal(vo);
+		/*
+		 * int totalPage = (int) Math.ceil((double)total/vo.getUnit());
+		 * 
+		 * int viewPage = vo.getViewPage(); System.out.println("viewPage::"+viewPage);
+		 * 
+		 * if(viewPage > totalPage || viewPage < 1) { viewPage = 1; }
+		 * System.out.println("viewPage22::"+viewPage);
+		 * 
+		 * int startIndex =(viewPage -1)*vo.getUnit()+1; int endIndex
+		 * =startIndex+(vo.getUnit()-1);
+		 * 
+		 * int startRowNo = total - (viewPage-1)*vo.getUnit();
+		 * 
+		 * 
+		 * vo.setStartIndex(startIndex); vo.setEndIndex(endIndex);
+		 */
+		
+		// PaginationInfo에 필수 정보를 넣어 준다.
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(vo.getViewPage()); // 현재 페이지 번호
+		paginationInfo.setRecordCountPerPage(vo.getUnit()); // 한 페이지에 게시되는 게시물 건수
+		paginationInfo.setPageSize(2); // 페이징 리스트의 사이즈
+		
+		int firstRecordIndex = paginationInfo.getFirstRecordIndex();
+		int lastRecordIndex = paginationInfo.getLastRecordIndex();
+		
+		int recordCountPerPage = paginationInfo.getRecordCountPerPage();
+		
+		vo.setStartIndex(firstRecordIndex); // 게시물 조회 시작 숫자
+		vo.setEndIndex(lastRecordIndex); // 게시물 조회 끝 숫자
+		paginationInfo.setTotalRecordCount(total); // 전체 게시물 건 수
+		
+		// 페이징 관련 정보가 있는 PaginationInfo 객체를 모델에 반드시 넣어준다.
+		List<?> list = boardService.selectNBoardList(vo);
+		
+		model.addAttribute("unit", vo.getUnit());
+		model.addAttribute("resultList", list);
+		model.addAttribute("startRowNo", firstRecordIndex);
+		model.addAttribute("total", total);
+		model.addAttribute("boardVO", vo);
+		model.addAttribute("paginationInfo", paginationInfo);
+		
+		return "board/boardListVue";
+	}
 	@RequestMapping(value = "/boardList.do")
 	public String selectNBoardList(BoardVO vo, ModelMap model) throws Exception {
 

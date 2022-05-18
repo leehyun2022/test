@@ -1,0 +1,128 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+      
+    
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>일반게시판 목록</title>
+</head>
+<link href="/js/jquery-ui-1.13.1/jquery-ui.css" rel="stylesheet">
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/jquery-ui-1.13.1/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<style>
+body {
+	font-size:9pt;
+}
+button {
+	font-size:9pt;
+}
+table {
+	width:600px;
+	border-collapse:collapse;
+}
+th,td {
+	border:1px solid #cccccc;
+	padding:3px;
+}
+.input1 {
+	width:98%;
+}
+.textarea {
+	width:98%;
+	height:100px;
+}
+</style>
+<script type="text/javascript">
+function fn_search(){
+	var unit=$("#unit").val();
+	location = "boardListVue.do?unit="+unit;
+	
+}
+function fn_page(num){
+
+	var unit=$("#unit").val();
+	location = "boardListVue.do?viewPage="+num+"&unit="+unit;
+	
+}
+function linkPage(pageNo){
+	var unit=$("#unit").val();
+	location.href = "/boardListVue.do?viewPage="+pageNo+"&unit="+unit;
+}	
+
+</script>
+<body>
+<%@ include file="../include/topmenu.jsp"  %>
+
+<br>
+<form:form commandName="boardVO" id="searchForm" name="searchForm" method="post" action="boardList.do">
+<div id="it_list">
+<div style="width:600px; text-align:right;">
+<form:select path="unit" v-model="selectModel" id="unit" onchange="fn_search(1);">
+<option v-for="(epItem,idx) in testSet" :value="epItem.flag" :key="epItem.idx"> 
+{{epItem.val}} 
+</option> 
+</form:select>
+<span>조회 할 건수 : {{selectModel}}</span> 
+</div>
+    <table>
+      <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회수</th>
+      </tr>
+      <tr v-for="item in items" :key="item.COLUMN_NM">
+        <td><span v-html="item.INDEX"></span></td>
+        <td><span v-html="item.TITLE_NM"></span></td>
+        <td><span v-html="item.NAME_NM"></span></td>
+        <td><span v-html="item.RDATE_NM"></span></td>
+        <td><span v-html="item.HITS_NM"></span></td>
+      </tr>
+    </table>
+</div>
+</form:form>
+</body>
+<script>
+var vueItems = new Vue({
+	  el: '#it_list', 
+	  data: { items : [],
+		  selectModel : '',
+	  	testSet : [{flag : '10', val : '10개씩 보기'},
+	  		{flag : '20', val : '20개씩 보기'},
+	  		{flag : '30', val : '50개씩 보기'},
+	  		{flag : '40', val : '100개씩 보기'}], 
+	  	}, 
+	  	mounted: function(){
+	  		this.testSet.flag="${boardVO.unit}";
+	  	 	<c:forEach items="${resultList}" var="item" varStatus="status"> 
+	  			this.items = this.items.concat({ 
+	  			INDEX : "${status.count}", 
+	  			TITLE_NM : "${item.title}", 
+	  			NAME_NM : "${item.name}", 
+	  			RDATE_NM : "${item.rdate}", 
+	  			HITS_NM : "${item.hits}", 
+	  			}); 
+	  		</c:forEach> 
+	  	}, 
+	  	methods : {
+/* 	  		if("${boardVO.unit}" == ''){ 
+				console.log("flag:null");
+	  		}else{ 
+				console.log("flag:not null");
+	  		}  */
+
+	         } 
+	  });
+</script>
+</html>
